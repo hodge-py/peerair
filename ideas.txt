@@ -1,0 +1,25 @@
+Fire off connection then disconnect to get status of user: offline or online. check if Peer id exists - done
+Add users id when sending a message - done
+
+add both connection when a user connects - done
+connect to user through friend list
+audio calls
+
+use stack to count the connections
+
+i.e stack = [true,true] => pop => [true]
+
+timer for online status.
+
+audio chat - block incoming calls if need be.
+
+block data connections too
+
+https://getconfide.com/
+
+if user is offline send file to server for storage and then send file to user once they log on.
+
+move friends to sidebar and add them on top of the message and file when clicked
+
+then they can connect when online
+
