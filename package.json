@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "adapterjs": "^0.15.5",
+    "electron-store": "^8.1.0",
     "fs-jetpack": "^5.1.0",
     "mysql2": "^3.6.5",
     "peerjs": "^1.5.2",

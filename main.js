@@ -2,6 +2,9 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 var mysql = require('mysql2');
 const fs = require("fs");
 const path = require('node:path')
+const Store = require('electron-store');
+
+const store = new Store();
 
 var win = '';
 
@@ -35,8 +38,16 @@ const createWindow = () => {
       minWidth:800,
       minHeight: 800
     })
-  
-    win.loadFile('login.html')
+
+    if(store.get('login_true') == undefined){
+      win.loadFile('login.html')
+    }
+  else{
+    win.loadFile('chat.html')
+  }
+
+  store.delete('login_true');
+
   }
 
 
@@ -68,11 +79,13 @@ const createWindow = () => {
             if(results){
             console.log(results); // results contains rows returned by server
             console.log(fields); // fields contains extra meta data about results, if available
+            store.set('login_true', true);
             win.loadFile('chat.html')
             }
           }
         );
 
+        
       })
 
 
