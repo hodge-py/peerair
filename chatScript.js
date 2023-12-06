@@ -14,7 +14,11 @@ const { createApp, ref } = Vue
   }).mount('#app')
 
 
-
+$(document).on('click','#connect-user', function () {
+  title = "hey u"
+  window.electronAPI.setTitle(title)
+  
+});
 
 
 

@@ -17,9 +17,8 @@ block data connections too
 
 https://getconfide.com/
 
-if user is offline send file to server for storage and then send file to user once they log on.
-
 move friends to sidebar and add them on top of the message and file when clicked
 
 then they can connect when online
 
+Ask user if they wish to send the message offline through the server

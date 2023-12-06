@@ -9,12 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-    <script src="/socket.io/socket.io.js"></script>
-
-    <script>
-        
-        var expressFlash = ''
-    </script>
     
 
 </head>
@@ -31,19 +25,10 @@
 
 <div id="mainContain" class="container shadow pb-2 rounded" style="background-color: rgba(0,0,0,.5); color: white; width: 65%;">
 
-<div id="invalid" class="row pb-5 m-0">
-    <% var expressFlash
-    if (expressFlash != undefined) { %> <p class="text-center text-danger"><%= expressFlash %> </p> <% } %>
-</div>
-
-<div id="" class="row pb-5 m-0">
-    <% var newflash
-    if (newflash != undefined) { %> <p class="text-center text-success"><%= newflash %> </p> <% } %>
-</div>
 
 <div class="row mb-4 m-0" id="sign-hide">
 <div class="col">
-<form class="w-75 mx-auto" action="/login-try" method="POST">
+
     <h3 class="fw-bold mb-3">Login</h3>
 
 
@@ -58,10 +43,9 @@
 
     </div>
 
-    <button type="submit" class="btn btn-primary form-control">Submit</button>
+    <button id="login-button" type="submit" class="btn btn-primary form-control">Submit</button>
 
 
-</form>
 </div>
 
 </div>
@@ -70,7 +54,6 @@
 
 <div class="row mb-4 m-0" id="register-hide" style="display: none;">
     <div class="col">
-    <form class="w-75 mx-auto" action="/register" method="POST">
         <h3 class="fw-bold mb-3">Register</h3>
 
 
@@ -91,7 +74,7 @@
         <button type="submit" class="btn btn-primary form-control">Submit</button>
     
     
-    </form>
+
 </div>
 
 </div>
@@ -123,84 +106,18 @@
 
 </body>
 
+
+
 <style>
     
 body {
-    background-image: url(./purple1.jpg);
+    background-color: rgb(65, 65, 65);
 }    
     
 </style>
 
 
-<script>
-
-$(document).ready(function () {
-    
-    $("#register-hide").hide();
-
-
-var counter = 0
-
-$(document).on("click", "#switch-between" ,function () {
-    if(counter % 2 == 0){
-    $("#sign-hide").hide();
-
-    $("#register-hide").show();
-
-    $("#switch-between").text("login");
-
-    counter += 1;
-    }
-    else{
-    $("#sign-hide").show();
-
-    $("#register-hide").hide();
-
-    $("#switch-between").text("register");
-
-    counter += 1;
-    }
-
-
-});
-
-$(document).on('click', '#forgotPass', function () {
-
-    $("#mainContain").append(`
-    <div class="input-group">
-        
-        <p>Enter a Username to send a password reset email</p>
-        <input type='text' class='form-control' />
-        <button type='button' class='btn btn-primary'>submit</button>
-
-
-    </div>
-    `)
-
-    
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-});
-
-
-
-
-
-
-
-</script>
+<script src="loginscript.js"></script>
 
 
 </html>
