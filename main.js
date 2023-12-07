@@ -31,7 +31,8 @@ connection.query(
 const createWindow = async () => {
     win = new BrowserWindow({
       webPreferences: {
-        preload: path.join(__dirname, 'preload.js')
+        preload: path.join(__dirname, 'preload.js'),
+        nodeIntegration: true
       },
       width: 800,
       height: 800,
