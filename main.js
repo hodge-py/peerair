@@ -28,7 +28,7 @@ connection.query(
   }
 );
 
-const createWindow = () => {
+const createWindow = async () => {
     win = new BrowserWindow({
       webPreferences: {
         preload: path.join(__dirname, 'preload.js')
@@ -39,26 +39,16 @@ const createWindow = () => {
       minHeight: 800
     });
 
-    childWindow = new BrowserWindow({ 
-      width: 1000, 
-      height: 800, 
-      modal: true, 
-      show: false, 
-      parent: win,
-      webPreferences: {
-        preload: path.join(__dirname, 'preload.js')
-      }
-    })
-
-    childWindow.loadFile("chat.html"); 
+    
 
 
 
   //if(store.get('login_true') == undefined){
-      win.loadFile('login.html')
+      win.loadFile('login.html');
    // }
   //else{
  //   win.loadFile('chat.html')
+ //   win.webContents.send('send-user', [store.get('username'),store.get('peer_id')]);
  // }
 
   //store.delete('login_true')
