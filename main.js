@@ -39,14 +39,14 @@ const createWindow = () => {
       minHeight: 800
     })
 
-    if(store.get('login_true') == undefined){
+  if(store.get('login_true') == undefined){
       win.loadFile('login.html')
     }
   else{
     win.loadFile('chat.html')
   }
 
-  store.delete('login_true');
+  store.delete('login_true')
 
   }
 
@@ -64,6 +64,7 @@ const createWindow = () => {
       ipcMain.on('set-title', (event, title) => {
         const webContents = event.sender
         const win = BrowserWindow.fromWebContents(webContents)
+        win.webContents.send('send-user', [store.get('username'),store.get('peer_id')]);
         win.setTitle(title)
       })
 
@@ -73,14 +74,22 @@ const createWindow = () => {
         console.log(args)
 
         connection.query(
-          'SELECT `username`, `pasword` FROM `login` where `username` = ? and `pasword` = ?', [args[0], args[1]],
+          'SELECT `username`, `pasword`, `peer_id` FROM `login` where `username` = ? and `pasword` = ?', [args[0], args[1]],
           function(err, results, fields) {
 
-            if(results){
-            console.log(results); // results contains rows returned by server
+            if(results.length > 0){
+            store.delete('username')
+            store.delete('peer_id')
+            console.log(results.length); // results contains rows returned by server
             console.log(fields); // fields contains extra meta data about results, if available
             store.set('login_true', true);
+            store.set('username', results[0].username)
+            store.set('peer_id', results[0].peer_id)
             win.loadFile('chat.html')
+            
+            }
+            else{
+              win.loadFile('login.html')
             }
           }
         );
