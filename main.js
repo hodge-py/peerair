@@ -37,16 +37,31 @@ const createWindow = () => {
       height: 800,
       minWidth:800,
       minHeight: 800
+    });
+
+    childWindow = new BrowserWindow({ 
+      width: 1000, 
+      height: 800, 
+      modal: true, 
+      show: false, 
+      parent: win,
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
     })
 
-  if(store.get('login_true') == undefined){
-      win.loadFile('login.html')
-    }
-  else{
-    win.loadFile('chat.html')
-  }
+    childWindow.loadFile("chat.html"); 
 
-  store.delete('login_true')
+
+
+  //if(store.get('login_true') == undefined){
+      win.loadFile('login.html')
+   // }
+  //else{
+ //   win.loadFile('chat.html')
+ // }
+
+  //store.delete('login_true')
 
   }
 
@@ -64,7 +79,7 @@ const createWindow = () => {
       ipcMain.on('set-title', (event, title) => {
         const webContents = event.sender
         const win = BrowserWindow.fromWebContents(webContents)
-        win.webContents.send('send-user', [store.get('username'),store.get('peer_id')]);
+        //win.webContents.send('send-user', [store.get('username'),store.get('peer_id')]);
         win.setTitle(title)
       })
 
@@ -75,7 +90,7 @@ const createWindow = () => {
 
         connection.query(
           'SELECT `username`, `pasword`, `peer_id` FROM `login` where `username` = ? and `pasword` = ?', [args[0], args[1]],
-          function(err, results, fields) {
+          async function(err, results, fields) {
 
             if(results.length > 0){
             store.delete('username')
@@ -85,8 +100,9 @@ const createWindow = () => {
             store.set('login_true', true);
             store.set('username', results[0].username)
             store.set('peer_id', results[0].peer_id)
-            win.loadFile('chat.html')
-            
+            await win.loadFile('chat.html')
+
+            win.webContents.send('send-user', [store.get('username'),store.get('peer_id')]);
             }
             else{
               win.loadFile('login.html')
