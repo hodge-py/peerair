@@ -34,7 +34,8 @@ $(document).on('click','#connect-user', function () {
 
 window.electronAPI.sendSettings((value) => {
 
-$("#mainUser").text(`${value[0]}`)
+$("#userIden").text(`${value[0]}`)
+
 console.log(value);
 username = value[0];
 peer_id = value[1];

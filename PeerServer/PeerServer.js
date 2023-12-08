@@ -53,8 +53,10 @@ class PeerServer {
     }
 
     _handleSendSignal(message,socket){
+      console.log(message)
       for(var i = 0; message[1].length > i; i++){
-        socket.to(message[1][i]).emit('handle peer',message[0]);
+       socket.to(message[1][i]).emit('handle peer',message[0]);
+        
       }
       
 
