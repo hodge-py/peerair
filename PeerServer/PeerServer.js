@@ -28,7 +28,7 @@ class PeerServer {
             socket.on('initiate peer', (room) =>
               this._handleInitiatePeer(room, socket),
             );
-            socket.on('sending signal', (message) =>
+            socket.on('send signal', (message) =>
               this._handleSendSignal(message, socket),
             );
             socket.on('create or join', () =>
@@ -45,9 +45,18 @@ class PeerServer {
 
 
     _handleInitiatePeer(room,socket){
-        socket.join(room)
-        socket.to(room).emit('initiate peer');
+        socket.join(room);
+        console.log(room);
+        this.ioServer.to(room).emit('initiate peer');
 
+
+    }
+
+    _handleSendSignal(message,socket){
+      for(var i = 0; message[1].length > i; i++){
+        socket.to(message[1][i]).emit('handle peer',message[0]);
+      }
+      
 
     }
 

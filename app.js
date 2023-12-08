@@ -12,5 +12,3 @@ port = process.env.PORT || 8081
 server.listen(port, () => {
   console.log(port);
 });
-
-console.log(serverPeer.ioServer);
