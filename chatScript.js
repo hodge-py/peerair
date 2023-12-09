@@ -76,10 +76,12 @@ class PeerClient {
   createEntity(){
     //const options = this._getPeerOptions(connection.initiator);
     this.peer = new SimplePeer({ initiator: true });
+    this.peer1 = new SimplePeer({ initiator: true });
     console.log("created");
     //this.peer.initiator = false
     console.log(this.peer.initiator)
     console.log(this.peer)
+    console.log(this.peer1)
     // set initiator on click of a user
 
     // If initiator,peer.on'signal' will fire right away, if not it waits for signal
@@ -102,6 +104,13 @@ class PeerClient {
     this.socket.on('handle peer', (data) =>
       this.handleSendSignal(data)
     );
+
+    
+    $(document).on('click','friendsNum', function () {
+
+
+      
+    });
 
 
   }
