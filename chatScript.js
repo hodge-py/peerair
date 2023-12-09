@@ -119,6 +119,7 @@ class PeerClient {
     try{
     console.log(connection)
     this.peer.signal(connection);
+    console.log("he???")
     }
     catch(error){
       console.log(error);

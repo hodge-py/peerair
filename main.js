@@ -14,10 +14,6 @@ var connection = mysql.createConnection({
   password : 'AVNS_Jaj2G0S2DROi77lmrSP',
   database : 'defaultdb',
   port: 17203,
-  ssl: {
-    rejectUnauthorized: true,
-    ca: fs.readFileSync("./ca.pem").toString(),
-  }
 });
 
 connection.query(
