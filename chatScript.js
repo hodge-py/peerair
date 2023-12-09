@@ -59,7 +59,7 @@ class PeerClient {
 
   init(){
     this.socket.emit('initiate peer', this.socket.user_id);
-    console.log("today");
+    console.log(this.socket.user_id);
     this.createPeerConnection()
   }
 
@@ -75,8 +75,13 @@ class PeerClient {
 
   createEntity(){
     //const options = this._getPeerOptions(connection.initiator);
-    this.peer = new SimplePeer({ initiator: true });
+    this.peer = new SimplePeer({ initiator: false });
     console.log("created");
+    //this.peer.initiator = false
+    console.log(this.peer.initiator)
+    console.log(this.peer)
+    // set initiator on click of a user
+
     // If initiator,peer.on'signal' will fire right away, if not it waits for signal
     // https://github.com/feross/simple-peer#peeronsignal-data--
     this.peer.on('signal', (data) => this._sendSignal(data));
