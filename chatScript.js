@@ -75,7 +75,7 @@ class PeerClient {
 
   createEntity(){
     //const options = this._getPeerOptions(connection.initiator);
-    this.peer = new SimplePeer({ initiator: false });
+    this.peer = new SimplePeer({ initiator: true });
     console.log("created");
     //this.peer.initiator = false
     console.log(this.peer.initiator)
@@ -122,6 +122,7 @@ class PeerClient {
 
   handleSendSignal(connection){
     try{
+    this.peer.initiator = false;
     console.log(connection)
     this.peer.signal(connection);
     console.log("he???")
