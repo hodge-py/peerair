@@ -55,6 +55,7 @@ class PeerClient {
       this.socket = io(serverUrl)
       this.socket.user_id = $("#userIden").text();
       this.peer
+      this.connections = {}
   }
 
   init(){
