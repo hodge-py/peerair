@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require('node:path')
 const Store = require('electron-store');
 var childProcess = require('child_process');
+var ip = require('ip');
 
 const store = new Store();
 
@@ -17,13 +18,6 @@ var connection = mysql.createConnection({
   port: 17203,
 });
 
-connection.query(
-  'SELECT * FROM `login`',
-  function(err, results, fields) {
-    console.log(results); // results contains rows returned by server
-    console.log(fields); // fields contains extra meta data about results, if available
-  }
-);
 
 const createWindow = async () => {
     win = new BrowserWindow({
@@ -69,6 +63,9 @@ const createWindow = async () => {
 
       win.loadFile('./Views/server.html');
 
+
+     
+
   }
 
 
@@ -76,12 +73,34 @@ const createWindow = async () => {
   app.whenReady().then(() => {
     createWindow()
     
+    console.log(ip.address())
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
       })
 
-      /*
+      
+  })
+
+
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit()
+  })
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  /*
       ipcMain.on('set-title', (event, title) => {
         const webContents = event.sender
         const win = BrowserWindow.fromWebContents(webContents)
@@ -120,13 +139,3 @@ const createWindow = async () => {
       })
 
         */
-    
-  })
-
-
-
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit()
-  })
-
-  
