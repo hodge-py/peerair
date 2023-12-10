@@ -2,13 +2,19 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const PeerServer = require('./PeerServer/PeerServer')
-///const { Server } = require("socket.io");
-//const io = new Server(server);
-const serverPeer = new PeerServer(server)
+const { Server } = require("socket.io");
+const io = new Server(server);
+var ip = require("ip");
+var path = require('path');
 
-port = process.env.PORT || 8081
 
-server.listen(port, () => {
+port = process.env.PORT || 8080
+
+
+serverMain = server.listen(port, () => {
   console.log(port);
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname,'./Views/chat.html'))
 });

@@ -3,6 +3,7 @@ var mysql = require('mysql2');
 const fs = require("fs");
 const path = require('node:path')
 const Store = require('electron-store');
+var childProcess = require('child_process');
 
 const store = new Store();
 
@@ -30,25 +31,43 @@ const createWindow = async () => {
         preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true
       },
-      width: 800,
-      height: 800,
-      minWidth:800,
-      minHeight: 800
+      width: 400,
+      height: 400,
+      minWidth:400,
+      minHeight: 400
     });
 
-    
 
+    function runScript(scriptPath, callback) {
 
+      // keep track of whether callback has been invoked to prevent multiple invocations
+      var invoked = false;
+  
+      var process = childProcess.fork(scriptPath);
+  
+      // listen for errors as they may prevent the exit event from firing
+      process.on('error', function (err) {
+          if (invoked) return;
+          invoked = true;
+          callback(err);
+      });
+  
+      // execute the callback once the process has finished running
+      process.on('exit', function (code) {
+          if (invoked) return;
+          invoked = true;
+          var err = code === 0 ? null : new Error('exit code ' + code);
+          callback(err);
+      });
+  
+  }
 
-  //if(store.get('login_true') == undefined){
-      win.loadFile('login.html');
-   // }
-  //else{
- //   win.loadFile('chat.html')
- //   win.webContents.send('send-user', [store.get('username'),store.get('peer_id')]);
- // }
+    runScript('./app.js', function (err) {
+      if (err) throw err;
+      console.log('finished running some-script.js');
+  });
 
-  //store.delete('login_true')
+      win.loadFile('./Views/server.html');
 
   }
 
@@ -62,7 +81,7 @@ const createWindow = async () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
       })
 
-
+      /*
       ipcMain.on('set-title', (event, title) => {
         const webContents = event.sender
         const win = BrowserWindow.fromWebContents(webContents)
@@ -100,7 +119,7 @@ const createWindow = async () => {
         
       })
 
-
+        */
     
   })
 

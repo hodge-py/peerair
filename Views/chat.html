@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <script src="./vue.global.js"></script>
+    <script src="http://localhost:8081/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js" integrity="sha512-0f7Ahsuvr+/P2btTY4mZIw9Vl23lS6LY/Y7amdkmUg2dqsUF+cTe4QjWvj/NIBHJoGksOiqndKQuI9yzn2hB0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+      
+    </script>
+    
+
+</head>
+<body class="" style="font-family: 'Roboto', sans-serif; min-height:100vh;">
+
+<!--
+<div class="d-flex m-0" style="backdrop-filter: blur(10px); color: white; width: 100%; height: 8vh;">
+
+  <h4 class="fw-bold p-2 ps-4" ><a href="/" style="color: white;"  >&#9736; PeerAir</a></h4>
+
+
+</div>
+-->
+
+<div id="app">
+
+<div class="row mx-0" style="min-height: 100vh; background-color: rgb(56, 56, 56);">
+
+<div class="row m-0" style="color: white; height: 4vh; border-bottom: 1px solid; border-color: rgb(172, 172, 172);"> 
+  <div class="col-8 p-0 my-auto">
+    <div class="">&#9736; Peerair</div>
+  </div>
+</div>
+  
+<div id="connector" class="col-sm-3 d-flex flex-column pt-2" style="height: 96vh; color:white">
+<!--
+  <div class=" p-5 rounded" style="background-color: rgba(0,0,0,.3);">
+  <div id="peer-there"></div>
+  <p id="linethrough" style="color: white;">User's Peer ID: <%- myVar %> 
+      <svg id="clipboard" style="height: 2em;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8 5.00005C7.01165 5.00082 6.49359 5.01338 6.09202 5.21799C5.71569 5.40973 5.40973 5.71569 5.21799 6.09202C5 6.51984 5 7.07989 5 8.2V17.8C5 18.9201 5 19.4802 5.21799 19.908C5.40973 20.2843 5.71569 20.5903 6.09202 20.782C6.51984 21 7.07989 21 8.2 21H15.8C16.9201 21 17.4802 21 17.908 20.782C18.2843 20.5903 18.5903 20.2843 18.782 19.908C19 19.4802 19 18.9201 19 17.8V8.2C19 7.07989 19 6.51984 18.782 6.09202C18.5903 5.71569 18.2843 5.40973 17.908 5.21799C17.5064 5.01338 16.9884 5.00082 16 5.00005M8 5.00005V7H16V5.00005M8 5.00005V4.70711C8 4.25435 8.17986 3.82014 8.5 3.5C8.82014 3.17986 9.25435 3 9.70711 3H14.2929C14.7456 3 15.1799 3.17986 15.5 3.5C15.8201 3.82014 16 4.25435 16 4.70711V5.00005M12 11H9M15 15H9" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+  </p>
+  <div class="input-group pb-3">
+    <input id="peerinput" type="text" class="form-control" placeholder="Peer ID" aria-label="Recipient's username" aria-describedby="basic-addon2">
+      <button id="peer-connect" class="btn btn-primary" type="button">Connect</button>
+  </div>
+
+
+  
+
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        Single Account Transfer
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <div id="experiment" class="border-top pt-4">
+          <p>Self Transfer? Generate a new peer id here to transfer with own account. Original Peer ID will reset on refresh.</p>
+          <button type="button" id="new-peer" class="btn btn-primary mb-3">Generate</button>
+          <div id="resultNewPeer"></div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Friends
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+
+          <div >
+            <div class="pb-3" style="overflow-y: auto; height: 100%; width: 100%;">
+          
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Peer ID</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Connect</th>
+                  </tr>
+                </thead>
+                <tbody id="tab-body">
+                  
+
+
+                </tbody>
+              </table>
+          
+            </div>
+            <label for="Nickname">Add a Friend (Enter a Username)</label>
+            <div id="" class="input-group pb-3 pt-2">
+              
+              <input id="Nickname" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                <button id="add-friends" class="btn btn-primary" type="button">Add</button>
+                
+              </div>
+            </div>
+
+
+          <div class='text-danger' id="userNfound"></div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+  </div>
+-->
+
+<p id="directFriends" class="ps-2">Direct Messages</p>
+<p id="userIden" class="shadow ps-2 rounded mainUser">user</p>
+<div id="friendsList">
+  <p class="shadow ps-2 rounded friendsNum mainUser">emmaC</p>
+</div>
+
+</div>
+
+
+  
+
+
+<div id="one-column" class="col-sm-9" style="min-height: 96vh; background-color: rgba(0, 0, 0, 0.274);">
+<!--
+  <div class="rounded mb-2 mt-2" style="overflow-y: auto; height: 42vh; background-color: rgba(0,0,0,.3);">
+    <table class="table" style="">
+      <thead>
+        <tr style="color: white;">
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Size</th>
+        </tr>
+      </thead>
+      <tbody id="file-table" style="color: white;">
+        
+      </tbody>
+    </table>
+
+  </div>
+
+    -->
+  
+
+    <div class="shadow d-flex flex-row align-items-center rounded" style="color: white; background-color: rgba(124, 124, 124, 0.089); height:7vh;">
+      <div id="username-place" class="align-self-center flex-grow-1 ps-2">User Name goes here <button id="connect-user" type="button" class="btn btn-outline-light ms-2">Connect</button></div>
+      <a id="call" type="button">
+      <svg class="pe-2" style="height: 3vh; width:4vh;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.5562 15.5477L14.1007 16.0272C14.1007 16.0272 13.0181 17.167 10.0631 14.0559C7.10812 10.9448 8.1907 9.80507 8.1907 9.80507L8.47752 9.50311C9.18407 8.75924 9.25068 7.56497 8.63424 6.6931L7.37326 4.90961C6.61028 3.8305 5.13596 3.68795 4.26145 4.60864L2.69185 6.26114C2.25823 6.71766 1.96765 7.30945 2.00289 7.96594C2.09304 9.64546 2.81071 13.259 6.81536 17.4752C11.0621 21.9462 15.0468 22.1239 16.6763 21.9631C17.1917 21.9122 17.6399 21.6343 18.0011 21.254L19.4217 19.7584C20.3806 18.7489 20.1102 17.0182 18.8833 16.312L16.9728 15.2123C16.1672 14.7486 15.1858 14.8848 14.5562 15.5477Z" fill="#ffffff"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M22 7C22 9.76142 19.7614 12 17 12C16.2002 12 15.4442 11.8122 14.7738 11.4783C14.5956 11.3895 14.392 11.36 14.1997 11.4114L13.0867 11.7092C12.6035 11.8385 12.1615 11.3965 12.2908 10.9133L12.5886 9.80031C12.64 9.60803 12.6105 9.4044 12.5217 9.22624C12.1878 8.55582 12 7.79984 12 7C12 4.23858 14.2386 2 17 2C19.7614 2 22 4.23858 22 7ZM17 4.8125C17.5178 4.8125 17.9375 5.23223 17.9375 5.75V6.0625H18.25C18.7678 6.0625 19.1875 6.48223 19.1875 7C19.1875 7.51777 18.7678 7.9375 18.25 7.9375H17.9375V8.25C17.9375 8.76777 17.5178 9.1875 17 9.1875C16.4822 9.1875 16.0625 8.76777 16.0625 8.25V7.9375H15.75C15.2322 7.9375 14.8125 7.51777 14.8125 7C14.8125 6.48223 15.2322 6.0625 15.75 6.0625H16.0625V5.75C16.0625 5.23223 16.4822 4.8125 17 4.8125Z" fill="#ffffff"></path> </g></svg>
+    </a>
+
+    </div>
+    <div style="display:none;">
+      <audio src=""></audio>
+    </div>
+    <div class="d-flex flex-column p-3 ps-5 rounded mb-2" id="chat" style="height: 82vh; overflow-y: auto; color: white; background-color: rgba(0, 0, 0, 0.541);">
+  
+  </div>
+  <div class="" style="">
+    <div class="input-group shadow">
+
+        <!-- <label for="formFile" class="form-label mt-3" style="color: white;" >File Upload</label> -->
+    <input class="form-control" type="file" id="formFile" style="color: white; background-color: rgba(190, 190, 190, 0.5);" multiple>
+    <!-- <label for="send-message" class="mt-4" style="color: white;">Send the Peer a Message</label> -->
+    <input id="send-message" type="text" class="form-control" style="color: white; background-color: rgba(190, 190, 190, 0.5);" />
+    <button type="button" id="sender" class="btn btn-outline-light">Send</button>
+  </div>
+  </div>
+
+<!-- <div class="d-flex flex-column-reverse p-3" id="chat" style=""></div> -->
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+</div>
+</body>
+<script src="chatScript.js"></script>
+<style>
+a {
+  color: white;
+}
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: lightblue;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+
+#clipboard:hover {
+    fill: lightblue;
+}
+
+#clipboard:hover path {
+    fill: lightblue;
+}
+
+#clipboard:hover plygon {
+    fill: lightblue;
+}
+
+#clipboard:hover circle {
+    fill: lightblue;
+}
+
+#one-column {
+  height: 92vh; border-left: .1em solid rgb(139, 115, 139);
+}
+
+.mainUser:hover{
+  background-color:rgb(121, 121, 121);
+}
+
+#call:hover path{
+  fill: rgb(192, 192, 192);
+}
+
+@media screen and (max-width: 576px) {
+  #one-column {
+    border-left: 0px;
+  }
+}
+
+
+
+</style>
+
+<!--
+<script>
+
+socket.emit("room");
+var peer;
+var connect;
+var connectTrue = false;
+var my_id = '<%- myVar %>';  
+
+var friends_list = <%- friends %>
+
+console.log(friends_list)
+var count = 1;
+friends_list.forEach(element => {
+  $("#tab-body").append(`<tr>
+                    <td>${element.nick}</td>
+                    <td class='elementId'>${element.ips}</td>
+                    <td class="statusNow">Offline</td>
+                    <td><button class="btn btn-primary friends-connect">Connect</button></td>
+                  </tr>`);
+
+  count += 1
+});
+
+peer = new Peer(my_id,{debug:3});
+
+
+$(document).on("click","#new-peer", function () {
+  $("#linethrough").css("text-decoration","line-through");
+  my_id = my_id + Math.floor(Math.random() * 5);
+  peer = new Peer(my_id,{debug:3});
+  $("#resultNewPeer").text(`${my_id}`);
+
+
+  peer.on('connection', async function(conn) {
+
+    if(connectTrue != true){
+  conn.on('open', async function(data){
+    console.log(conn.peer);
+    $("#chat").append(`<p>${conn.peer} has connected</p>`);
+    console.log("connection right?");
+    connect = peer.connect(conn.peer,{reliable: true});
+    connectTrue = true;
+  });
+
+  conn.on('close', async function(data){
+    console.log("bye peer");
+    connectTrue = false;
+  });
+}
+  conn.on('data', async function(data){
+
+    
+    
+async function getBase64(file) {
+    return new Promise(function(resolve) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = function() {
+        resolve(reader.result)
+      }
+    })
+  };
+    // Will print 'hi!'
+
+
+
+    if(data.valid){
+      $("#chat").append(`<p>${data.ids}: ${data.messer}</p>`)
+    }
+
+    else {
+    console.log(data.files);
+    name_file = data.name
+    size = parseFloat((data.size / (1024*1024)).toPrecision(2))
+    
+    data = new Blob([data.files],{type:data.type})
+    console.log(data);
+    const reader = new FileReader();
+    data = await getBase64(data);
+    //var url = window.URL.createObjectURL(data);
+    $("#file-table").append(`
+        <tr>
+        <th scope="row">${count}</th>
+        <td><a id='file-tester' href='${data}' class='text-start' download='${name_file}' target='_blank' download>${name_file}</a></td>
+        <td>${size} MB</td>
+        </tr>
+    
+    `);
+
+
+      count += 1;
+    console.log(data)
+    //$("#file-tester").attr('href',url);
+
+  }
+  });
+});
+
+
+});
+
+
+
+//console.log(peer);
+
+/*
+socket.on("complete_id", (arg) => {
+        console.log("test")
+        caller_id = arg
+        connect = peer.connect(`${my_id}${caller_id}`); //change to connect before sending a message
+        $("#peer-there").text(`Peer connected`)
+      });
+*/
+
+
+$(document).on("click","#peer-connect", function () {
+  
+  //connect = peer.connect($("#peerinput").val(),{reliable: true});
+  connect = peer.connect($("#peerinput").val(),{reliable: true});
+
+
+  $("#peerinput").val('');
+
+  connectTrue = true;
+  
+});
+
+$(document).on("click",".friends-connect", function () {
+  
+  makeCon = $(this).parent().siblings(".elementId").text();
+  console.log(makeCon)
+  console.log($(this))
+  //connect = peer.connect($("#peerinput").val(),{reliable: true});
+  connect = peer.connect(makeCon,{reliable: true});
+
+  connectTrue = true;
+  
+});
+
+
+$(document).on("click", '#sender', function() {
+          mess = $("#send-message").val();
+          console.log("Teres");
+          connect.send({messer: mess, valid: true, ids: my_id});
+          $("#chat").append(`<p class='text-end'>${my_id}: ${mess}</p>`);
+          mess = $("#send-message").val('');
+
+  });
+
+
+$(document).on("click", '#file-submit', async function() {
+    for(i = 0; i < $('#formFile').prop('files').length; i++){
+    var myFile = $('#formFile').prop('files')[i];
+    console.log(myFile)
+    const blob = new Blob([myFile])
+    file = await new Response(blob).arrayBuffer();
+    connect.send({files:file,type:myFile.type,name: myFile.name, size: myFile.size});
+    $("#chat").append(`<p class='text-end'>${myFile.name}</p>`);
+    }
+
+});
+
+count = 1;
+
+
+peer.on('connection', async function(conn) {
+  if(connectTrue != true){
+  conn.on('open', async function(data){
+    console.log(conn.peer);
+    $("#chat").append(`<p>${conn.peer} has connected</p>`);
+    console.log("connection right?");
+    connect = peer.connect(conn.peer,{reliable: true});
+    connectTrue = true;
+  });
+}
+
+conn.on('close', async function(data){
+    console.log("bye peer");
+    connectTrue = false;
+  });
+
+
+  conn.on('data', async function(data){
+
+async function getBase64(file) {
+    return new Promise(function(resolve) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = function() {
+        resolve(reader.result)
+      }
+    })
+  };
+    // Will print 'hi!'
+
+
+
+    if(data.valid){
+      $("#chat").append(`<p>${data.ids}: ${data.messer}</p>`)
+    }
+
+    else {
+    console.log(data.files);
+    name_file = data.name
+    size = parseFloat((data.size / (1024*1024)).toPrecision(2))
+    
+    data = new Blob([data.files],{type:data.type})
+    console.log(data);
+    const reader = new FileReader();
+    data = await getBase64(data);
+    //var url = window.URL.createObjectURL(data);
+    $("#file-table").append(`
+        <tr>
+        <th scope="row">${count}</th>
+        <td><a id='file-tester' href='${data}' class='text-start' download='${name_file}' target='_blank' download>${name_file}</a></td>
+        <td>${size} MB</td>
+        </tr>
+    
+    `);
+
+
+      count += 1;
+    console.log(data)
+    //$("#file-tester").attr('href',url);
+
+    }
+
+
+
+  });
+
+
+});
+
+
+
+
+$(document).on('click', '#add-friends', function () {
+
+  val_1 = $("#Nickname").val();
+  val_2 = $("#ip-peer").val();
+  
+  $.ajax({
+    type: "POST",
+    url: "/chat",
+    data: {val1: val_1, val2: socket.id},
+    success: function (response) {
+      alert("good");
+    }
+    
+  });
+
+  /*
+  $("#tab-body").append(`<tr>
+                    <th scope="row">${count}</th>
+                    <td>${val_1}</td>
+                    <td>${val_2}</td>
+                  </tr>`);
+
+      count += 1;
+
+      */
+});
+
+
+socket.on('useradded', function (message) {
+  $("#tab-body").append(`<tr>
+                    <td>${message[0]}</td>
+                    <td>${message[1]}</td>
+                    <td>Offline</td>
+                    <td><button class="btn btn-primary friends-connect">Connect</button></td>
+                  </tr>`);
+
+});
+
+socket.on('userNot', function (message) {
+    $("#userNfound").text(`User does not exist`);
+    $("#Nickname").val('');
+
+});
+
+
+
+
+
+$(document).on("click", "#clipboard", function () {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val(my_id).select();
+  console.log($temp)
+  document.execCommand("copy");
+  $temp.remove();
+  alert("Copied to Clipboard")
+});
+
+
+socket.emit('login', {userId: my_id});
+
+function timeToCheck(){
+  socket.emit('login', {userId: my_id});
+
+}
+
+setInterval(timeToCheck, 60000);
+
+
+socket.on('loginVal', function (message) {
+  console.log("iterate");
+  $('.elementId').each(function(){
+    console.log(message);
+    console.log($(this).text())
+    if(message.userId == $(this).text()){
+      $(this).siblings(".statusNow").text("Online");
+    };
+
+
+
+  });
+
+});
+
+
+$(window).on("beforeunload", function () {
+  socket.emit("logoff",{userId: my_id});
+  console.log("unloaddded")
+});
+
+socket.on('logoffVal', function (message) {
+  console.log("iterate22");
+  $('.elementId').each(function(){
+    console.log(message);
+    console.log($(this).text())
+    if(message.userId == $(this).text()){
+      $(this).siblings(".statusNow").text("Offline");
+    };
+
+
+
+  });
+
+});
+
+
+</script>
+
+-->
+
+
+</html>
