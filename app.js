@@ -7,12 +7,12 @@ const io = new Server(server);
 var ip = require("ip");
 var path = require('path');
 var bodyParser = require('body-parser')
-const multer  = require('multer')
-var multiparty = require('multiparty');
+const Busboy = require('busboy');
+const fs = require("fs");
 
-app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 port = process.env.PORT || 8080
 
@@ -25,9 +25,16 @@ serverMain = server.listen(port, () => {
 
 
 app.post("/file-submit", (req, res) => {
+  let base64String = req.body.hey; // Not a real image
+// Remove header
+  let base64Image = base64String.split(';base64,').pop();
 
-  console.log(req.file)
+  fs.writeFile('image.png', base64Image, {encoding: 'base64'}, function(err) {
+    console.log('File created');
+});
+
+  console.log(req.body.hey)
   //res.sendFile(path.join(__dirname,'public/uploads/Cat03.jpg'))
-  res.send("complete");
+  res.send(req.body.hey);
 })
 

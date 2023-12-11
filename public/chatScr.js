@@ -20,15 +20,13 @@ $(document).ready(function () {
         let formData = new FormData();
         console.log(myFile[0].type)
         var blob = new Blob([myFile[0]],{type: myFile[0].type})
-        blob = await blob.arrayBuffer()
         //console.log(blob)
-        formData.append(myFile[0].name,blob)
+
+        data = await getBase64(blob);
         $.ajax({
             type: "POST",
             url: "/file-submit",
-            data: formData,
-            processData: false,
-            contentType: false,
+            data: {hey : data},
             success: function(data){
               console.log(data)
             }
@@ -36,6 +34,17 @@ $(document).ready(function () {
 
 
     });
+
+
+    async function getBase64(file) {
+        return new Promise(function(resolve) {
+          var reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = function() {
+            resolve(reader.result)
+          }
+        })
+      };
 
     
 
