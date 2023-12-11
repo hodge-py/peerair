@@ -5,6 +5,7 @@ const path = require('node:path')
 const Store = require('electron-store');
 var childProcess = require('child_process');
 var ip = require('ip');
+const { shell } = require('electron')
 
 const store = new Store();
 
@@ -28,7 +29,14 @@ const createWindow = async () => {
       width: 400,
       height: 400,
       minWidth:400,
-      minHeight: 400
+      minHeight: 400,
+      maxWidth: 400,
+      maxHeight: 400
+    });
+
+    win.webContents.setWindowOpenHandler(({ url }) => {
+      shell.openExternal(url);
+      return { action: 'deny' };
     });
 
 
@@ -61,8 +69,13 @@ const createWindow = async () => {
       console.log('finished running some-script.js');
   });
 
-      win.loadFile('./Views/server.html');
+    current_ip = ip.address()
+    current_ip = "http://" + current_ip + ':8080'
+    await win.loadFile('./public/server.html');
+    win.webContents.send('ip_address', current_ip);
+    
 
+    
 
      
 
@@ -74,6 +87,8 @@ const createWindow = async () => {
     createWindow()
     
     console.log(ip.address())
+    
+
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
