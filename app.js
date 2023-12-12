@@ -34,7 +34,7 @@ serverMain = server.listen(port, () => {
 const upload = multer({
   storage: storage,
   limits: {
-      fileSize: 1000000 //give no. of bytes
+      fileSize: 2000000000000 //give no. of bytes
   },
   // fileFilter: function(req, file, cb){
   //     checkFileType(file, cb);
