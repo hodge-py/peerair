@@ -10,9 +10,9 @@ $(document).ready(function () {
             $("#mainBody").append(`
             <tr>
             <th scope="row">${i+1}</th>
-            <td><a href="./uploads/${data[i]}" download>${data[i]}</a></td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td><a href="./uploads/${data[i][0]}" download>${data[i][0]}</a></td>
+            <td>${(data[i][1] / (1024*1024)).toFixed(2)} MB</td>
+            <td>${data[i][2]}</td>
             </tr>
             `)
 
@@ -22,8 +22,6 @@ $(document).ready(function () {
     });
 
 
-
-    
     const socket = io();
 
     $(document).on('click',"#file", function () {
@@ -54,6 +52,7 @@ $(document).ready(function () {
             success: function(data){
               console.log(data)
               $("#files-added").text("")
+              socket.emit("newfile");
             }
           });
 

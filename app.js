@@ -34,7 +34,7 @@ serverMain = server.listen(port, () => {
 const upload = multer({
   storage: storage,
   limits: {
-      fileSize: 2000000000000 //give no. of bytes
+      fileSize: 20000000000 //give no. of bytes
   },
   // fileFilter: function(req, file, cb){
   //     checkFileType(file, cb);
@@ -61,24 +61,27 @@ app.post("/file-submit", (req, res) => {
 
 app.get("/uploadFolder", (req, res) => {
     fileArr = []
-    fileSize = []
-    lastM = []
+    fileSize = ''
+    lastM = ''
 
     route = path.join(__dirname,'/public/uploads')
 
     fs.readdirSync(route).forEach(file => {
       //Print file name
       console.log(file)
-      fileArr.push(file)
       
-      fileSize.push(fs.statSync(route + file).size)
-      lastM.push(fs.statSync(route + file).mtime)
+      
+      size = fs.statSync(route + '/' + file).size
+      lastM = fs.statSync(route + '/' + file).mtime
+
+      fileArr.push([file,size,lastM])
 
   });
 
-  total = [fileArr,fileSize,lastM]
-  res.send(total)
+  res.send(fileArr)
 
 })
+
+
 
 
