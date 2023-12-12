@@ -52,7 +52,7 @@ app.post("/file-submit", (req, res) => {
         }else{
             //send correct msg
             //res.send()
-            res.send('Successful');
+            res.send(`${req.file.originalname}`);
             console.log('file uploaded succcessfully');
         }
     });
@@ -82,6 +82,24 @@ app.get("/uploadFolder", (req, res) => {
 
 })
 
+
+io.on("connection", (socket) => {
+  route = path.join(__dirname,'/public/uploads');
+
+  socket.on("newfile", (arg) => {
+      newName = arg
+      size = fs.statSync(route + '/' + arg).size
+      lastM = fs.statSync(route + '/' + arg).mtime
+
+    arr = [newName,size,lastM]
+    io.emit("appendFile",arr);
+
+  });
+
+
+
+
+});
 
 
 

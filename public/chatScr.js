@@ -52,7 +52,7 @@ $(document).ready(function () {
             success: function(data){
               console.log(data)
               $("#files-added").text("")
-              socket.emit("newfile");
+              socket.emit("newfile",data);
             }
           });
 
@@ -68,6 +68,18 @@ $(document).ready(function () {
     });
 
 
+    socket.on("appendFile", (arg) => {
+
+        $("#mainBody").append(`
+            <tr>
+            <th scope="row">?</th>
+            <td><a href="./uploads/${arg[0]}" download>${arg[0]}</a></td>
+            <td>${(arg[1] / (1024*1024)).toFixed(2)} MB</td>
+            <td>${arg[2]}</td>
+            </tr>
+            `)
+
+      });
 
 
     
