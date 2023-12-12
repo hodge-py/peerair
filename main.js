@@ -3,9 +3,17 @@ var mysql = require('mysql2');
 const fs = require("fs");
 const path = require('node:path')
 const Store = require('electron-store');
-var childProcess = require('child_process');
 var ip = require('ip');
 const { shell } = require('electron')
+const express = require('express');
+const exp = express();
+const http = require('http');
+const server = http.createServer(exp);
+const { Server } = require("socket.io");
+const io = new Server(server);
+var bodyParser = require('body-parser')
+const multer = require("multer");
+
 
 const store = new Store();
 
@@ -30,36 +38,6 @@ const createWindow = async () => {
       shell.openExternal(url);
       return { action: 'deny' };
     });
-
-
-    function runScript(scriptPath, callback) {
-
-      // keep track of whether callback has been invoked to prevent multiple invocations
-      var invoked = false;
-  
-      var process = childProcess.fork(scriptPath);
-  
-      // listen for errors as they may prevent the exit event from firing
-      process.on('error', function (err) {
-          if (invoked) return;
-          invoked = true;
-          callback(err);
-      });
-  
-      // execute the callback once the process has finished running
-      process.on('exit', function (code) {
-          if (invoked) return;
-          invoked = true;
-          var err = code === 0 ? null : new Error('exit code ' + code);
-          callback(err);
-      });
-  
-  }
-
-    runScript('./app.js', function (err) {
-      if (err) throw err;
-      console.log('finished running some-script.js');
-  });
 
     current_ip = ip.address()
     current_ip = "http://" + current_ip + ':8080'
@@ -100,49 +78,96 @@ const createWindow = async () => {
 
 
 
+  
 
 
-
-
-
-
-
-  /*
-      ipcMain.on('set-title', (event, title) => {
-        const webContents = event.sender
-        const win = BrowserWindow.fromWebContents(webContents)
-        //win.webContents.send('send-user', [store.get('username'),store.get('peer_id')]);
-        win.setTitle(title)
-      })
-
-      ipcMain.on('login', (event, args) => {
-        //const webContents = event.sender
-        //const win = BrowserWindow.fromWebContents(webContents)
-        console.log(args)
-
-        connection.query(
-          'SELECT `username`, `pasword`, `peer_id` FROM `login` where `username` = ? and `pasword` = ?', [args[0], args[1]],
-          async function(err, results, fields) {
-
-            if(results.length > 0){
-            store.delete('username')
-            store.delete('peer_id')
-            console.log(results.length); // results contains rows returned by server
-            console.log(fields); // fields contains extra meta data about results, if available
-            store.set('login_true', true);
-            store.set('username', results[0].username)
-            store.set('peer_id', results[0].peer_id)
-            await win.loadFile('chat.html')
-
-            win.webContents.send('send-user', [store.get('username'),store.get('peer_id')]);
-            }
-            else{
-              win.loadFile('login.html')
-            }
+  exp.use(bodyParser.json({limit: '1000mb'}));
+  exp.use(bodyParser.urlencoded({limit: '1000mb', extended: true}));
+  
+  port = process.env.PORT || 8080
+  
+  exp.use('/', express.static(__dirname + "/public"));
+  
+  const storage = multer.diskStorage({
+    destination: path.join(__dirname,'/public/uploads') ,
+    filename: function(req, file, cb){
+        cb(null, file.originalname);
+    }
+  })
+  
+  
+  serverMain = server.listen(port, () => {
+    console.log(port);
+  });
+  
+  const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 20000000000 //give no. of bytes
+    },
+    // fileFilter: function(req, file, cb){
+    //     checkFileType(file, cb);
+    // }
+  }).single('fileInput');
+  
+  
+  
+  exp.post("/file-submit", (req, res) => {
+      upload(req, res, (err) =>{
+          if(err){
+              //Send error msg
+              console.log(err);
+              res.send(err);
+          }else{
+              //send correct msg
+              //res.send()
+              res.send(`${req.file.originalname}`);
+              console.log('file uploaded succcessfully');
           }
-        );
-
+      });
+  })
+  
+  
+  exp.get("/uploadFolder", (req, res) => {
+      fileArr = []
+      fileSize = ''
+      lastM = ''
+  
+      route = path.join(__dirname,'/public/uploads')
+  
+      fs.readdirSync(route).forEach(file => {
+        //Print file name
+        console.log(file)
         
-      })
+        
+        size = fs.statSync(route + '/' + file).size
+        lastM = fs.statSync(route + '/' + file).mtime
+  
+        fileArr.push([file,size,lastM])
+  
+    });
+  
+    res.send(fileArr)
+  
+  })
+  
+  
+  io.on("connection", (socket) => {
+    route = path.join(__dirname,'/public/uploads');
+  
+    socket.on("newfile", (arg) => {
+        newName = arg
+        size = fs.statSync(route + '/' + arg).size
+        lastM = fs.statSync(route + '/' + arg).mtime
+  
+      arr = [newName,size,lastM]
+      io.emit("appendFile",arr);
+  
+    });
+  
+  });
 
-        */
+
+
+
+  
