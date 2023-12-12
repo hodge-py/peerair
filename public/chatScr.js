@@ -16,17 +16,16 @@ $(document).ready(function () {
 
     $(document).on('click',"#file-submit", async function () {
 
-        var myFile = $('#formFile').prop('files');
+        var myFile = $('#formFile').prop('files')[0];
         let formData = new FormData();
-        console.log(myFile[0].type)
-        var blob = new Blob([myFile[0]],{type: myFile[0].type})
-        //console.log(blob)
-
-        data = await getBase64(blob);
+        formData.append('fileInput',myFile);
+        
         $.ajax({
             type: "POST",
             url: "/file-submit",
-            data: {hey : data},
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function(data){
               console.log(data)
             }
@@ -34,17 +33,6 @@ $(document).ready(function () {
 
 
     });
-
-
-    async function getBase64(file) {
-        return new Promise(function(resolve) {
-          var reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onloadend = function() {
-            resolve(reader.result)
-          }
-        })
-      };
 
     
 

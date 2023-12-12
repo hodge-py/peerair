@@ -9,32 +9,52 @@ var path = require('path');
 var bodyParser = require('body-parser')
 const Busboy = require('busboy');
 const fs = require("fs");
+const multer = require("multer");
 
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({limit: '1000mb'}));
+app.use(bodyParser.urlencoded({limit: '1000mb', extended: true}));
 
 port = process.env.PORT || 8080
 
 app.use('/', express.static(__dirname + "/public"));
+
+const storage = multer.diskStorage({
+  destination: path.join(__dirname,'/public/uploads') ,
+  filename: function(req, file, cb){
+      cb(null, file.originalname);
+  }
+})
 
 
 serverMain = server.listen(port, () => {
   console.log(port);
 });
 
+const upload = multer({
+  storage: storage,
+  limits: {
+      fileSize: 1000000 //give no. of bytes
+  },
+  // fileFilter: function(req, file, cb){
+  //     checkFileType(file, cb);
+  // }
+}).single('fileInput');
+
+
 
 app.post("/file-submit", (req, res) => {
-  let base64String = req.body.hey; // Not a real image
-// Remove header
-  let base64Image = base64String.split(';base64,').pop();
-
-  fs.writeFile('image.png', base64Image, {encoding: 'base64'}, function(err) {
-    console.log('File created');
-});
-
-  console.log(req.body.hey)
-  //res.sendFile(path.join(__dirname,'public/uploads/Cat03.jpg'))
-  res.send(req.body.hey);
+    upload(req, res, (err) =>{
+        if(err){
+            //Send error msg
+            console.log(err);
+            res.send(err);
+        }else{
+            //send correct msg
+            //res.send()
+            res.send('Successful');
+            console.log('file uploaded succcessfully');
+        }
+    });
 })
 
