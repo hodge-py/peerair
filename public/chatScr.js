@@ -1,5 +1,30 @@
 $(document).ready(function () {
+
+    $.ajax({
+        type: "GET",
+        url: "/uploadFolder",
+        data: "",
+        success: function (data) {
+            for(var i = 0; data.length > i; i++){
+            //console.log(data)
+            $("#mainBody").append(`
+            <tr>
+            <th scope="row">${i+1}</th>
+            <td><a href="./uploads/${data[i]}" download>${data[i]}</a></td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            </tr>
+            `)
+
+            }
+
+        }
+    });
+
+
+
     
+    const socket = io();
 
     $(document).on('click',"#file", function () {
         $("#upload-file").css("display",'none');
@@ -28,11 +53,23 @@ $(document).ready(function () {
             contentType: false,
             success: function(data){
               console.log(data)
+              $("#files-added").text("")
             }
           });
 
 
+        
+
     });
+
+
+    $(document).on('change','#formFile', function () {
+        $("#files-added").text($("#formFile").prop("files")[0].name)
+        
+    });
+
+
+
 
     
 

@@ -58,3 +58,27 @@ app.post("/file-submit", (req, res) => {
     });
 })
 
+
+app.get("/uploadFolder", (req, res) => {
+    fileArr = []
+    fileSize = []
+    lastM = []
+
+    route = path.join(__dirname,'/public/uploads')
+
+    fs.readdirSync(route).forEach(file => {
+      //Print file name
+      console.log(file)
+      fileArr.push(file)
+      
+      fileSize.push(fs.statSync(route + file).size)
+      lastM.push(fs.statSync(route + file).mtime)
+
+  });
+
+  total = [fileArr,fileSize,lastM]
+  res.send(total)
+
+})
+
+

@@ -43,18 +43,18 @@
 <div class="col-11 p-0">
 
 
-<div id="one-column" class="p-3" style="background-color: rgba(0, 0, 0, 0.274); overflow-y: auto;">
+<div id="one-column" class="" style="background-color: rgba(0, 0, 0, 0.274); overflow-y: auto;">
 
-  <table id="file-table" class="table table-striped table-dark table-hover table-bordered p-3 shadow">
+  <table id="file-table" class="table table-striped table-dark table-hover table-bordered shadow">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
+        <th scope="col">File Name</th>
+        <th scope="col">Size</th>
         <th scope="col">Handle</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="mainBody">
       <tr>
         <th scope="row">1</th>
         <td>Mark</td>
@@ -82,8 +82,9 @@
   <div id="upload-file" class="" style="display: none; height:90%; padding-top:15%;">
     <label class="custom-file-upload rounded text-center text-white mb-3" for="formFile">
     <input class="form-control" name="fileInput" type="file" id="formFile" style="color: white; background-color: rgba(190, 190, 190, 0.5);" multiple>
-    <div class="d-flex" style="height: 100%;">
+    <div class="d-flex flex-column" style="height: 100%;">
     <div class="mx-auto my-auto display-6">Click Here to Upload a File(s)</div>
+    <div id="files-added" class="mx-auto my-auto"></div>
   </div>
 
     </label>
