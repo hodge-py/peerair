@@ -11,14 +11,6 @@ const store = new Store();
 
 var win = '';
 
-var connection = mysql.createConnection({
-  host     : 'mysql-2872dcda-khodge1-9a96.a.aivencloud.com',
-  user     : 'avnadmin',
-  password : 'AVNS_Jaj2G0S2DROi77lmrSP',
-  database : 'defaultdb',
-  port: 17203,
-});
-
 
 const createWindow = async () => {
     win = new BrowserWindow({
