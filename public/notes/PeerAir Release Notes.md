@@ -1,9 +1,3 @@
----
-title: PeerAir Release Notes
-created: '2023-12-13T09:07:25.968Z'
-modified: '2023-12-13T18:55:20.446Z'
----
-
 # PeerAir Release Notes
 
 ## Release V1.0.0
