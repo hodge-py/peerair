@@ -37,12 +37,12 @@ $(document).ready(function () {
      
     });
 
+
     $(document).on('click',"#file-submit", async function () {
 
         var myFile = $('#formFile').prop('files')[0];
         let formData = new FormData();
         formData.append('fileInput',myFile);
-        
         $.ajax({
             type: "POST",
             url: "/file-submit",
@@ -55,9 +55,6 @@ $(document).ready(function () {
               socket.emit("newfile",data);
             }
           });
-
-
-        
 
     });
 

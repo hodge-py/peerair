@@ -18,7 +18,7 @@ const multer = require("multer");
 const store = new Store();
 
 var win = '';
-
+var savesPath;
 
 const createWindow = async () => {
     win = new BrowserWindow({
@@ -31,7 +31,8 @@ const createWindow = async () => {
       minWidth:400,
       minHeight: 400,
       maxWidth: 400,
-      maxHeight: 400
+      maxHeight: 400,
+      icon: path.join(__dirname, '/public/thunder.png')
     });
 
     win.webContents.setWindowOpenHandler(({ url }) => {
@@ -44,10 +45,6 @@ const createWindow = async () => {
     await win.loadFile('./public/server.html');
     win.webContents.send('ip_address', current_ip);
     
-
-    
-
-     
 
   }
 
@@ -78,7 +75,7 @@ const createWindow = async () => {
 
 
 
-  
+
 
 
   exp.use(bodyParser.json({limit: '1000mb'}));
@@ -89,7 +86,7 @@ const createWindow = async () => {
   exp.use('/', express.static(__dirname + "/public"));
   
   const storage = multer.diskStorage({
-    destination: path.join(__dirname,'/public/uploads') ,
+    destination: path.join(__dirname,'/public/uploads'),
     filename: function(req, file, cb){
         cb(null, file.originalname);
     }
@@ -112,8 +109,8 @@ const createWindow = async () => {
   
   
   
-  exp.post("/file-submit", (req, res) => {
-      upload(req, res, (err) =>{
+  exp.post("/file-submit", async (req, res) => {
+      upload(req, res, async (err) =>{
           if(err){
               //Send error msg
               console.log(err);
@@ -133,7 +130,7 @@ const createWindow = async () => {
       fileSize = ''
       lastM = ''
   
-      route = path.join(__dirname,'/public/uploads')
+      route = path.join(__dirname,"/public/uploads")
   
       fs.readdirSync(route).forEach(file => {
         //Print file name
@@ -153,17 +150,20 @@ const createWindow = async () => {
   
   
   io.on("connection", (socket) => {
-    route = path.join(__dirname,'/public/uploads');
-  
+    
     socket.on("newfile", (arg) => {
+        route2 = path.join(__dirname,"/public/uploads");
+
         newName = arg
-        size = fs.statSync(route + '/' + arg).size
-        lastM = fs.statSync(route + '/' + arg).mtime
+        size = fs.statSync(route2 + '/' + arg).size
+        lastM = fs.statSync(route2 + '/' + arg).mtime
   
       arr = [newName,size,lastM]
       io.emit("appendFile",arr);
   
     });
+
+    
   
   });
 
