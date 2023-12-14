@@ -16,7 +16,7 @@ jobs:
       run: npm ci
     - name: publish
       env:
-        THE_BANDIT: ${{ secrets.THE_BANDIT }}
+        GITHUB_TOKEN: ${{ github.token }}
       run: npm run publish
 
   publish_on_mac:
@@ -30,7 +30,7 @@ jobs:
       run: npm ci
     - name: publish
       env:
-        THE_BANDIT: ${{ secrets.THE_BANDIT }}
+        GITHUB_TOKEN: ${{ github.token }}
       run: npm run publish
 
   publish_on_win:
@@ -44,5 +44,5 @@ jobs:
       run: npm ci
     - name: publish
       env:
-        THE_BANDIT: ${{ secrets.THE_BANDIT }}
+        GITHUB_TOKEN: ${{ github.token }}
       run: npm run publish
