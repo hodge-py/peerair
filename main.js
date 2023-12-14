@@ -13,8 +13,10 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 var bodyParser = require('body-parser')
 const multer = require("multer");
+const updater = require('src/index');
 
 
+//updater.init('https://raw.githubusercontent.com/hodge-py/PeerAir-production/main/update.json');
 
 
 const store = new Store();
