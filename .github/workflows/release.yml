@@ -16,7 +16,7 @@ jobs:
     - name: install dependencies
       run: npm install
     - name: publish
-      run: npm run publish
+      run: npm publish
 
   publish_on_mac:
     runs-on: macos-latest
@@ -28,7 +28,7 @@ jobs:
     - name: install dependencies
       run: npm install
     - name: publish
-      run: npm run publish
+      run: npm publish
 
   publish_on_win:
     runs-on: windows-latest
@@ -40,4 +40,4 @@ jobs:
     - name: install dependencies
       run: npm install
     - name: publish
-      run: npm run publish
+      run: npm publish
