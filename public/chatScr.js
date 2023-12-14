@@ -33,17 +33,27 @@ $(document).ready(function () {
 
     $(document).on('click',"#file", function () {
         $("#upload-file").css("display",'none');
-        $("#file-table").css("display",'table');
+        $("#table-cover").css("display",'table');
         $("#delete-row").css("display",'block');
+        $("#show-chat").css("display",'none');
 
      
     });
 
 
     $(document).on('click',"#upload", function () {
-        $("#file-table").css("display",'none');
+        $("#table-cover").css("display",'none');
         $("#delete-row").css("display",'none');
         $("#upload-file").css("display",'block');
+        $("#show-chat").css("display",'none');
+     
+    });
+
+    $(document).on('click',"#chat", function () {
+        $("#table-cover").css("display",'none');
+        $("#delete-row").css("display",'none');
+        $("#upload-file").css("display",'none');
+        $("#show-chat").css("display",'block');
      
     });
 
@@ -115,6 +125,23 @@ $(document).ready(function () {
         
       });
 
+
+      $(document).on('click','#submit-chat', function () {
+
+        chatVal = $("#chat-text").val();
+        $("#chat-text").val('');
+
+        socket.emit('chat logs', chatVal);
+        
+      });
+
+
+      socket.on("chat returned", (arg) => {
+        
+        $("#main-chat").append(`<p>${arg}</p>`);
+        
+
+      });
 
     
 

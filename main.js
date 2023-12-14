@@ -196,9 +196,15 @@ const createWindow = async () => {
           if (err) throw err;
         });
       }
-      
+
       }
     });
+  });
+
+
+  socket.on("chat logs", (arg) => {
+    io.sockets.emit("chat returned", arg);
+    
   });
 
 
