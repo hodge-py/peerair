@@ -45,7 +45,7 @@ const createWindow = async () => {
     });
 
     current_ip = ip.address()
-    current_ip = "http://" + current_ip + ':8080'
+    current_ip = "http://" + current_ip + ':8185'
     await win.loadFile('./public/server.html');
     win.webContents.send('ip_address', current_ip);
     
@@ -85,7 +85,7 @@ const createWindow = async () => {
   exp.use(bodyParser.json({limit: '1000mb'}));
   exp.use(bodyParser.urlencoded({limit: '1000mb', extended: true}));
   
-  port = process.env.PORT || 8080
+  port = process.env.PORT || 8185
   
   exp.use('/', express.static(__dirname + "/public"));
   
@@ -166,6 +166,24 @@ const createWindow = async () => {
       io.emit("appendFile",arr);
   
     });
+
+
+    socket.on("delete files", (arg) => {
+      
+      directory = path.join(__dirname,"/public/uploads");
+
+      fs.readdir(directory, (err, files) => {
+        if (err) throw err;
+      
+        for (const file of files) {
+          fs.unlink(path.join(directory, file), (err) => {
+            if (err) throw err;
+          });
+        }
+      });
+
+
+  });
 
     
   

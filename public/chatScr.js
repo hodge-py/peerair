@@ -27,12 +27,15 @@ $(document).ready(function () {
     $(document).on('click',"#file", function () {
         $("#upload-file").css("display",'none');
         $("#file-table").css("display",'table');
+        $("#delete-row").css("display",'block');
+
      
     });
 
 
     $(document).on('click',"#upload", function () {
         $("#file-table").css("display",'none');
+        $("#delete-row").css("display",'none');
         $("#upload-file").css("display",'block');
      
     });
@@ -76,6 +79,14 @@ $(document).ready(function () {
             </tr>
             `)
 
+      });
+
+
+      $(document).on('click','#delete-all', function () {
+        socket.emit('delete files');
+        $('#exampleModal').modal('hide');
+        $("#mainBody").text("")
+        
       });
 
 
