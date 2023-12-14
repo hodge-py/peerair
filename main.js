@@ -169,7 +169,7 @@ const createWindow = async () => {
 
 
     socket.on("delete files", (arg) => {
-      
+
       directory = path.join(__dirname,"/public/uploads");
 
       fs.readdir(directory, (err, files) => {
@@ -181,9 +181,27 @@ const createWindow = async () => {
           });
         }
       });
-
-
   });
+
+  socket.on("single file delete", (arg) => {
+
+    directory = path.join(__dirname,"/public/uploads");
+
+    fs.readdir(directory, (err, files) => {
+      if (err) throw err;
+    
+      for (const file of files) {
+        if(file == arg){
+        fs.unlink(path.join(directory, file), (err) => {
+          if (err) throw err;
+        });
+      }
+      
+      }
+    });
+  });
+
+
 
     
   
