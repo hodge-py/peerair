@@ -13,10 +13,10 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish"
   },
-  "publishConfig": { 
+  "publishConfig": {
     "access": "public",
     "cache": "~/.npm"
-},
+  },
   "dependencies": {
     "adapterjs": "0.15.5",
     "electron-simple-updater": "^2.0.11",
