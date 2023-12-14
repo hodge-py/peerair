@@ -1,8 +1,7 @@
 name: Release
 on:
   release:
-    types:
-      - created
+    types: [published]
 
 jobs:
 
@@ -14,9 +13,9 @@ jobs:
       with:
         node-version: 20
     - name: install dependencies
-      run: npm install
+      run: npm ci
     - name: publish
-      run: npm publish
+      run: npm run publish
 
   publish_on_mac:
     runs-on: macos-latest
@@ -26,9 +25,9 @@ jobs:
       with:
         node-version: 20
     - name: install dependencies
-      run: npm install
+      run: npm ci
     - name: publish
-      run: npm publish
+      run: npm run publish
 
   publish_on_win:
     runs-on: windows-latest
@@ -38,6 +37,6 @@ jobs:
       with:
         node-version: 20
     - name: install dependencies
-      run: npm install
+      run: npm ci
     - name: publish
-      run: npm publish
+      run: npm run publish
