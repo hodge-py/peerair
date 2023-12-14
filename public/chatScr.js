@@ -138,7 +138,7 @@ $(document).ready(function () {
 
       socket.on("chat returned", (arg) => {
         
-        $("#main-chat").append(`<p>${arg}</p>`);
+        $("#main-chat").append(`<p class='text-wrap'>${arg}</p>`);
         
 
       });
