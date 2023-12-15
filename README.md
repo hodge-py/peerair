@@ -8,6 +8,7 @@ Home file and link sharing solution
 An added benefit of this is the fast transfers since all files are contained on the Local Area Network. 
 
 
-![peerFile](https://github.com/hodge-py/peerair/assets/105604814/273a6104-db3d-48ff-aa48-24f1ca7e8cf8)
+
+![peerFile](https://github.com/hodge-py/peerair/assets/105604814/2567cec5-fe45-4d25-9c90-345644d31da1)
 
 
