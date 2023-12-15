@@ -1,5 +1,4 @@
 # peerair
-electron app
 
 License:
 
