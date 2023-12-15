@@ -9,6 +9,17 @@ $(document).ready(function () {
       })
 
 
+      
+      $(document).on('click', '#clipboard', function () {
+
+        navigator.clipboard.writeText($("#ip-address").text()).then(function () {
+          alert('Address copied to clipboard')
+      }, function () {
+          alert('Failure to copy. Check permissions for clipboard')
+      });
+        
+      });
+
 
 
 
