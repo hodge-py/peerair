@@ -57,8 +57,6 @@ const createWindow = async () => {
   app.whenReady().then(() => {
     createWindow()
     
-    console.log(ip.address())
-    
 
 
     app.on('activate', () => {
@@ -117,7 +115,6 @@ const createWindow = async () => {
       upload(req, res, async (err) =>{
           if(err){
               //Send error msg
-              console.log(err);
               res.send(err);
           }else{
               //send correct msg
@@ -138,7 +135,6 @@ const createWindow = async () => {
   
       fs.readdirSync(route).forEach(file => {
         //Print file name
-        console.log(file)
         
         
         size = fs.statSync(route + '/' + file).size
