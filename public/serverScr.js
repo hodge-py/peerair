@@ -22,6 +22,17 @@ $(document).ready(function () {
 
 
 
+      $.ajax({  
+        type: "POST",  
+        url: "http://peerair-server.000.pe", 
+        data: {test: "test"},
+        success: function(response) {
+            console.log("hey it worked")
+        }
+      });
+
+
+
 
 
 
