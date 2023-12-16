@@ -71,6 +71,7 @@ $(document).ready(function () {
             contentType: false,
             success: function(data){
               console.log(data)
+              $("#success-or").text("Successful Upload").delay(2000).fadeOut('slow');
               $("#files-added").text("")
               socket.emit("newfile",data);
             }
