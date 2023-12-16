@@ -1,6 +1,6 @@
 $(document).ready(function () {
   
-
+    /*
     window.electronAPI.ip_address((value) => {
         $("#ip-address").text(value);
         $("#ip-address").attr("href", value)
@@ -8,7 +8,7 @@ $(document).ready(function () {
 
       })
 
-
+      */
       
       $(document).on('click', '#clipboard', function () {
 
@@ -24,10 +24,11 @@ $(document).ready(function () {
 
       $.ajax({  
         type: "POST",  
-        url: "http://peerair-server.000.pe", 
+        url: "http://localhost/peerair-server/", 
+        crossDomain:true,
         data: {test: "test"},
         success: function(response) {
-            console.log("hey it worked")
+            console.log(response)
         }
       });
 
