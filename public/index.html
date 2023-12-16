@@ -69,7 +69,7 @@
 
 </div>
 
-  <div id="delete-row" class="p-2 text-end" style="background-color: rgba(0, 0, 0, 0.274);">
+  <div id="delete-row" class="p-2 text-end" style="background-color: rgba(0, 0, 0, 0.274); color:white;">
     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete all files</button>
     
     </div>
@@ -153,6 +153,26 @@
 </body>
 <script src="./chatScr.js"></script>
 <style>
+
+.dataTables_length {
+color: white !important; 
+}
+
+.dataTables_filter {
+  color: white !important;
+}
+
+.dataTables_info {
+  color: white !important;
+
+}
+
+.dataTables_paginate {
+  color: white !important;
+
+} 
+
+
 a {
   color: white;
 }
@@ -213,6 +233,7 @@ input[type="file"] {
 #chat:hover{
   background-color: rgb(121, 121, 121);
 }
+
 
 
 </style>
