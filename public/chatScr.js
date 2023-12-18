@@ -27,7 +27,7 @@ $(document).ready(function () {
             `)
 
             }
-            datatable = $('#file-table').DataTable();
+            datatable = $('#file-table').DataTable({responsive: true});
 
         }
     });
@@ -63,8 +63,12 @@ $(document).ready(function () {
 
 
     $(document).on('click',"#file-submit", async function () {
-
         var myFile = $('#formFile').prop('files')[0];
+        console.log(myFile)
+        if(myFile == undefined){
+
+        }
+        else{
         let formData = new FormData();
         formData.append('fileInput',myFile);
         $.ajax({
@@ -75,11 +79,16 @@ $(document).ready(function () {
             contentType: false,
             success: function(data){
               console.log(data)
-              $("#success-or").text("Successful Upload").delay(2000).fadeOut('slow');
+              $("#success-or").text("Successful Upload").delay(2000).fadeOut('slow',function() {
+                $("#success-or").text("")
+                $("#success-or").css("display","block")
+              });
               $("#files-added").text("")
               socket.emit("newfile",data);
             }
           });
+        }
+
 
     });
 
@@ -127,7 +136,7 @@ $(document).ready(function () {
       $(document).on('click','#delete-all', function () {
         socket.emit('delete files');
         $('#exampleModal').modal('hide');
-        $("#mainBody").text("")
+        datatable.clear().draw()
         
       });
 
