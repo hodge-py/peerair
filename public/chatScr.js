@@ -177,7 +177,12 @@ $(document).ready(function () {
         let folder = zip.folder('collection');
         $(':checkbox:checked').each(function() {
           console.log($(this).parent().parent().find('a'))
+          if($(this).parent().parent().find('a').length == 0){
+
+          }
+          else{
           selected.push($(this).parent().parent().find('a').attr("href"));
+          }
           });
 
           for (let i = 0; i < selected.length; i++) {
@@ -194,7 +199,10 @@ $(document).ready(function () {
       });
 
     
-      
+      $(document).on('click','#all-checkboxes', function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+        
+      });
 
 
       

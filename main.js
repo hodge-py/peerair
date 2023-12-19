@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron')
 var mysql = require('mysql2');
 const fs = require("fs");
 const path = require('node:path')
@@ -48,8 +48,9 @@ const createWindow = async () => {
     current_ip = "http://" + current_ip + ':8185'
     await win.loadFile('./public/server.html');
     win.webContents.send('ip_address', current_ip);
-    
 
+
+    
   }
 
 
@@ -73,9 +74,6 @@ const createWindow = async () => {
   })
 
   
-
-
-
 
 
 
