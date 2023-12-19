@@ -12,7 +12,7 @@ $(document).ready(function () {
             //console.log(data)
             $("#mainBody").append(`
             <tr>
-            <th scope="row"><input class="form-check-input" type="checkbox"></th>
+            <th scope="row"><input class="form-check-input all-checks" type="checkbox"></th>
             <td class='fileClass'><a href="./uploads/${data[i][0]}" download>${data[i][0]}</a></td>
             <td>${(data[i][1] / (1024*1024)).toFixed(2)} MB</td>
             <td>${data[i][2]}</td>
@@ -37,7 +37,8 @@ $(document).ready(function () {
 
     $(document).on('click',"#file", function () {
         $("#upload-file").css("display",'none');
-        $("#table-cover").css("display",'table');
+        $("#table-cover").css("display",'block');
+        $("#file-table").css("display",'table');
         $("#delete-row").css("display",'block');
         $("#show-chat").css("display",'none');
 
@@ -118,7 +119,7 @@ $(document).ready(function () {
             `)
           */
         datatable.row.add([
-          `<input class="form-check-input" type="checkbox">`,
+          `<input class="form-check-input all-checks" type="checkbox">`,
           `<a href="./uploads/${arg[0]}" download>${arg[0]}</a>`,
           `${(arg[1] / (1024*1024)).toFixed(2)} MB`,
           `${arg[2]}`,
@@ -143,7 +144,7 @@ $(document).ready(function () {
       
 
       $(document).on('click', '.delete-single', function () {
-        fileName = $(this).parent().parent().siblings('.fileClass').text()
+        fileName = $(this).parent().parent().parent().find('a').text();
 
         socket.emit("single file delete", fileName);
 
@@ -170,7 +171,31 @@ $(document).ready(function () {
 
       });
 
+      $(document).on('click','#download-all', function () {
+        var zip = new JSZip();
+        selected = []
+        let folder = zip.folder('collection');
+        $(':checkbox:checked').each(function() {
+          console.log($(this).parent().parent().find('a'))
+          selected.push($(this).parent().parent().find('a').attr("href"));
+          });
+
+          for (let i = 0; i < selected.length; i++) {
+            const imageBlob = fetch(selected[i]).then(response => response.blob());
+            
+            console.log(imageBlob)
+            folder.file(selected[i].slice(10), imageBlob);
+
+            
+          }
+          
+          folder.generateAsync({ type: "blob" }).then(content => saveAs(content, "files"));
+        
+      });
+
     
+      
+
 
       
 
