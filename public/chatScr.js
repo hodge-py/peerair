@@ -12,7 +12,7 @@ $(document).ready(function () {
             //console.log(data)
             $("#mainBody").append(`
             <tr>
-            <th scope="row"><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
+            <th scope="row"><input class="form-check-input" type="checkbox"></th>
             <td class='fileClass'><a href="./uploads/${data[i][0]}" download>${data[i][0]}</a></td>
             <td>${(data[i][1] / (1024*1024)).toFixed(2)} MB</td>
             <td>${data[i][2]}</td>
