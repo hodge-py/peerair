@@ -229,10 +229,11 @@
                              </div>
                             <div class="card-body">
                               <h1 id="priceCal" class="card-title pb-3">$2.99/mo</h1>
-                              <p class="card-text fw-bold">All the features of free plus</p>
+                              <p class="card-text fw-bold">All the features of free plus some changes</p>
                               <p class="card-text">Transfer outside of your local network</p>
                               <p class="card-text">HTTPS for local and non-local transfers</p>
                               <p class="card-text">Files never expire</p>
+                              <p class="card-text">Chat Saving</p>
                               <div class="d-flex justify-content-center align-items-bottom">
                               <a href="#" class="btn btn-primary">Go somewhere</a>
                             </div>
@@ -334,10 +335,10 @@ a:active {
     
     $(document).on('click','.btn-check', function () {
         if($(this).val() == 'month'){
-            $("#priceCal").text("2.99/mo");
+            $("#priceCal").text("$2.99/mo");
         }
         else if($(this).val() == 'year'){
-            $("#priceCal").text("29.99/yr");
+            $("#priceCal").text("$29.99/yr");
         }
 
     });
