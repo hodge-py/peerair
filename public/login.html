@@ -32,7 +32,6 @@
 <div class="row mb-4 m-0 rounded" id="sign-hide" style="background-color: rgba(0,0,0,.5);">
 <div class="col">
 
-<form class="w-75 mx-auto" action="/login-try" method="POST" style="">
     <h3 class="fw-bold mb-3 pt-3">Login</h3>
 
 
@@ -47,10 +46,8 @@
 
     </div>
 
-    <button type="submit" class="btn btn-primary form-control mb-4">Submit</button>
+    <button id="submit-log" type="submit" class="btn btn-primary form-control mb-4">Submit</button>
 
-
-</form>
 
 <div class="d-flex justify-content-evenly pb-4">
     <a href="./Signup.html" class="">Signup</a>
@@ -107,6 +104,32 @@ a:active {
 
 <script>
 
+$(document).ready(function () {
+    
+
+    $(document).on('click','#submit-log', function () {
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:3001/login-try",
+            dataType:'JSON',
+            data: {'username': $("#username2").val(), 'password': $("#password2").val()},
+            success: function (response) {
+                if(response.valid == true){
+                    window.location.href = "./index2.html"
+                }
+            }
+        });
+
+
+    });
+
+
+
+
+
+
+});
 
 </script>
 
