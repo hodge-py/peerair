@@ -14,6 +14,10 @@
     <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
+    <script>
+        
+    </script>
+
 
 </head>
 <body style="width: 100%;" class="" >

@@ -6,10 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script>
-        
-    </script>
     
 
 </head>
@@ -34,7 +30,7 @@
 
     <h3 class="fw-bold mb-3 pt-3">Login</h3>
 
-
+    <form>
     <div class="form-group mb-3 ">
 
     <label for="username2">Email:</label>
@@ -47,7 +43,7 @@
     </div>
 
     <button id="submit-log" type="submit" class="btn btn-primary form-control mb-4">Submit</button>
-
+    </form>
 
 <div class="d-flex justify-content-evenly pb-4">
     <a href="./Signup.html" class="">Signup</a>
