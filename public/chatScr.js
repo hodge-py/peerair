@@ -73,6 +73,17 @@ $(document).ready(function () {
         let formData = new FormData();
         formData.append('fileInput',myFile);
         $.ajax({
+              xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = Math.round((evt.loaded / evt.total) * 100);
+                        console.log(percentComplete)
+                        $("#main-progress").prop('aria-valuenow',percentComplete).css("width",`${percentComplete}%`).text(percentComplete);
+                    }
+              }, false);
+              return xhr;
+            },
             type: "POST",
             url: "/file-submit",
             data: formData,
@@ -83,6 +94,7 @@ $(document).ready(function () {
               $("#success-or").text("Successful Upload").delay(2000).fadeOut('slow',function() {
                 $("#success-or").text("")
                 $("#success-or").css("display","block")
+                $("#main-progress").prop('aria-valuenow','0').css("width",`0%`).text('0');
               });
               $("#files-added").text("")
               socket.emit("newfile",data);
